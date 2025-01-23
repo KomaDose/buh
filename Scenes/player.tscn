@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://b563i12u5stb6"]
+
+[ext_resource type="Script" path="res://Scripts/player.cs" id="1_m8l0a"]
+[ext_resource type="Texture2D" uid="uid://osis3oba1xmt" path="res://Assests/skia.png" id="2_dojve"]
+[ext_resource type="Shader" path="res://invert_colors.gdshader" id="3_vbnwj"]
+[ext_resource type="Script" path="res://Scripts/tele_point.cs" id="4_4ir6b"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qe1ge"]
+polygon = PackedVector2Array(-2, 5, -2, 0, -1, 0, -1, -1, 0, -1, -0.0743637, -2, 4, -2, 4, -1, 6, -1, 6, 0, 7, 0, 7, 2, 6, 2, 6, 3, 5, 3, 5.02663, 4, 3, 4, 3, 8, -7, 8, -7, 5.98984, -6, 6, -6, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2rjt"]
+shader = ExtResource("3_vbnwj")
+
+[sub_resource type="Curve2D" id="Curve2D_ys7y1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 65, 4)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d26w3"]
+size = Vector2(2, 2)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("telePoint", "teleRange", "teleSprite", "path")]
+z_index = 5
+position = Vector2(0, -8)
+script = ExtResource("1_m8l0a")
+telePoint = NodePath("Path2D/TeleRange/TelePoint")
+teleRange = NodePath("Path2D/TeleRange")
+teleSprite = NodePath("TeleSprite")
+path = NodePath("Path2D")
+
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+position = Vector2(-0.5, 0)
+polygon = PackedVector2Array(-6, 8, 7, 8, 7, -1.5, -2, -1.5, -2, 5, -6, 5)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
+occluder = SubResource("OccluderPolygon2D_qe1ge")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
+texture = ExtResource("2_dojve")
+
+[node name="TeleSprite" type="Sprite2D" parent="."]
+light_mask = 0
+z_index = -1
+material = SubResource("ShaderMaterial_e2rjt")
+texture = ExtResource("2_dojve")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ys7y1")
+
+[node name="TeleRange" type="PathFollow2D" parent="Path2D"]
+position = Vector2(0, 4)
+rotates = false
+loop = false
+
+[node name="Area2D" type="Area2D" parent="Path2D/TeleRange"]
+script = ExtResource("4_4ir6b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/TeleRange/Area2D"]
+shape = SubResource("RectangleShape2D_d26w3")
+
+[node name="TelePoint" type="Node2D" parent="Path2D/TeleRange"]
+light_mask = 0
+
+[connection signal="body_entered" from="Path2D/TeleRange/Area2D" to="Path2D/TeleRange/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Path2D/TeleRange/Area2D" to="Path2D/TeleRange/Area2D" method="_on_body_exited"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1oglloyrnlck"]
+
+[ext_resource type="Script" path="res://Scripts/tilemap_baking.gd" id="1_j6d5n"]
+
+[node name="Tile Map Baker" type="StaticBody2D"]
+script = ExtResource("1_j6d5n")

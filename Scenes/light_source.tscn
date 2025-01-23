@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://u0bt5sqnrdjy"]
+
+[ext_resource type="Texture2D" uid="uid://cbsv4jbg08joe" path="res://Assests/PlaceHolder.png" id="1_ttij0"]
+[ext_resource type="Texture2D" uid="uid://e0aurxvdx2iq" path="res://Assests/fos.png" id="2_8kcf4"]
+
+[node name="Light Source" type="Node2D"]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(3, 3)
+color = Color(0.0196078, 0.0156863, 0.0117647, 1)
+blend_mode = 1
+shadow_enabled = true
+shadow_color = Color(0.980392, 0.984314, 0.988235, 1)
+texture = ExtResource("1_ttij0")
+texture_scale = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8kcf4")

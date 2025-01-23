@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://dut6refe30vj0"]
+
+[ext_resource type="PackedScene" uid="uid://u0bt5sqnrdjy" path="res://Scenes/light_source.tscn" id="1_3v7p0"]
+[ext_resource type="PackedScene" uid="uid://c2p2or7jpujvk" path="res://Scenes/light_rays.tscn" id="2_8i3bx"]
+[ext_resource type="PackedScene" uid="uid://b563i12u5stb6" path="res://Scenes/player.tscn" id="3_tonn0"]
+[ext_resource type="TileSet" uid="uid://dey6rbkto0uig" path="res://Assests/Tileset.tres" id="4_cllne"]
+[ext_resource type="Script" path="res://Scripts/camera2d.cs" id="5_4qeqb"]
+[ext_resource type="PackedScene" uid="uid://b1oglloyrnlck" path="res://Scenes/tile_map_baker.tscn" id="5_dbf27"]
+
+[sub_resource type="Curve2D" id="Curve2D_3dq08"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 640, -56, 0, 0, 0, 0, -263, -56)
+}
+point_count = 2
+
+[node name="Level 2" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -494.0
+offset_top = -250.0
+offset_right = 960.0
+offset_bottom = 138.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(494, 568)
+
+[node name="Light Source" parent="." instance=ExtResource("1_3v7p0")]
+position = Vector2(498, -289)
+
+[node name="Light Rays" parent="Light Source" instance=ExtResource("2_8i3bx")]
+unique_name_in_owner = true
+
+[node name="Player" parent="." instance=ExtResource("3_tonn0")]
+unique_name_in_owner = true
+position = Vector2(57, -8)
+
+[node name="TileMap" type="Node2D" parent="."]
+light_mask = 0
+
+[node name="TileMapLayer" type="TileMapLayer" parent="TileMap"]
+light_mask = 0
+tile_set = ExtResource("4_cllne")
+
+[node name="Tile Map Baker" parent="TileMap" instance=ExtResource("5_dbf27")]
+
+[node name="Start Pos" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(749, -8)
+
+[node name="Path2D" type="Path2D" parent="."]
+unique_name_in_owner = true
+curve = SubResource("Curve2D_3dq08")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+position = Vector2(640, -56)
+rotation = 3.14159
+rotates = false
+loop = false
+
+[node name="Camera2D" type="Camera2D" parent="Path2D/PathFollow2D"]
+light_mask = 0
+position = Vector2(3.8147e-06, -3.8147e-06)
+zoom = Vector2(2.5, 2.5)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_left_margin = 0.05
+drag_top_margin = 0.1
+drag_right_margin = 0.05
+drag_bottom_margin = 0.1
+editor_draw_drag_margin = true
+script = ExtResource("5_4qeqb")
