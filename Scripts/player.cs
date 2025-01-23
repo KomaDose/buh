@@ -150,6 +150,7 @@ public partial class player : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+		//Testing 1 2 3 
 	}
 
 	public void Death() {
