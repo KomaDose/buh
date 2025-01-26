@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/player.cs" id="1_m8l0a"]
 [ext_resource type="Texture2D" uid="uid://osis3oba1xmt" path="res://Assests/skia.png" id="2_dojve"]
-[ext_resource type="Shader" path="res://invert_colors.gdshader" id="3_vbnwj"]
+[ext_resource type="Shader" path="res://Scripts/invert_colors.gdshader" id="3_vbnwj"]
 [ext_resource type="Script" path="res://Scripts/tele_point.cs" id="4_4ir6b"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qe1ge"]
@@ -18,7 +18,7 @@ _data = {
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d26w3"]
-size = Vector2(2, 2)
+size = Vector2(6, 4)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("telePoint", "teleRange", "teleSprite", "path")]
 z_index = 5

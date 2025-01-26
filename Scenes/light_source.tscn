@@ -7,12 +7,13 @@
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 scale = Vector2(3, 3)
-color = Color(0.0196078, 0.0156863, 0.0117647, 1)
+color = Color(0, 0, 0, 1)
 blend_mode = 1
 shadow_enabled = true
-shadow_color = Color(0.980392, 0.984314, 0.988235, 1)
+shadow_color = Color(1, 1, 1, 1)
 texture = ExtResource("1_ttij0")
 texture_scale = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
 texture = ExtResource("2_8kcf4")

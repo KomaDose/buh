@@ -29,6 +29,8 @@ public partial class player : CharacterBody2D
 
 	tele_point tpScript;
 
+	PackedScene smoke = GD.Load<PackedScene>("res://Scenes/smoke.tscn");
+
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
@@ -137,9 +139,7 @@ public partial class player : CharacterBody2D
 				teleRange.ProgressRatio += 0.5f;
 			}
 		}
-
-		//GD.Print(teleRange.ProgressRatio);
-
+		/*
 		if (Input.IsActionJustPressed("jump")) {
 			if (teleRange.ProgressRatio > 0 && !tpScript.isOverlapping) {
 				this.Position = telePoint.GlobalPosition;
@@ -147,14 +147,24 @@ public partial class player : CharacterBody2D
 				teleSprite.Position = Vector2.Zero;
 			}
 		}
-
+		*/
+		//Darkness
+		if (Input.IsActionJustPressed("jump")) {
+			if (teleRange.ProgressRatio > 0) {
+				SpawnSmoke();
+			}
+		}
 		Velocity = velocity;
 		MoveAndSlide();
-		//Testing 1 2 3 
+	}
+
+	public void SpawnSmoke() {
+		StaticBody2D instance = (StaticBody2D)smoke.Instantiate();
+		AddSibling(instance);
+		instance.Position = telePoint.GlobalPosition;
 	}
 
 	public void Death() {
 		this.Position = startPos.Position;
-		//GD.Print("Death");
 	}
 }
