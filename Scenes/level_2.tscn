@@ -148,10 +148,6 @@ shape = SubResource("RectangleShape2D_5j164")
 position = Vector2(232, -8)
 shape = SubResource("RectangleShape2D_c0trt")
 
-[node name="Start Pos" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(217, -8)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 light_mask = 0
 position = Vector2(0, -74)
@@ -164,3 +160,7 @@ drag_top_margin = 0.1
 drag_right_margin = 0.05
 drag_bottom_margin = 0.1
 editor_draw_drag_margin = true
+
+[node name="Start Pos" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(217, -8)

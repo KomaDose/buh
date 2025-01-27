@@ -56,7 +56,6 @@ public partial class player : CharacterBody2D
 		}
 
 		//Coyote Time
-		/*
 		if (IsOnFloor()) {
 			coyoteTimeCounter = coyoteTime;
 		}
@@ -78,7 +77,6 @@ public partial class player : CharacterBody2D
 			coyoteTimeCounter = 0f;
 			jumpBufferTimeCounter = 0f;
 		}
-		*/
 		
 		direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 
@@ -139,17 +137,17 @@ public partial class player : CharacterBody2D
 				teleRange.ProgressRatio += 0.5f;
 			}
 		}
-		/*
-		if (Input.IsActionJustPressed("jump")) {
+		
+		if (Input.IsActionJustPressed("action_z")) {
 			if (teleRange.ProgressRatio > 0 && !tpScript.isOverlapping) {
 				this.Position = telePoint.GlobalPosition;
 				teleRange.ProgressRatio = 0f;
 				teleSprite.Position = Vector2.Zero;
 			}
 		}
-		*/
+		
 		//Darkness
-		if (Input.IsActionJustPressed("jump")) {
+		if (Input.IsActionJustPressed("action_x")) {
 			if (teleRange.ProgressRatio > 0) {
 				SpawnSmoke();
 			}
