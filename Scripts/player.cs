@@ -17,8 +17,6 @@ public partial class player : CharacterBody2D
 
 	CollisionPolygon2D col;
 
-	light_rays lr;
-
 	[Export] Node2D telePoint;
 	[Export] PathFollow2D teleRange;
 	[Export] Sprite2D teleSprite;
@@ -31,14 +29,12 @@ public partial class player : CharacterBody2D
 
 	PackedScene smoke = GD.Load<PackedScene>("res://Scenes/smoke.tscn");
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
 	public override void _Ready() {
 		startPos = GetNode<Node2D>("%Start Pos");
 		sprite = GetNode<Sprite2D>("Sprite2D");
 		col = GetNode<CollisionPolygon2D>("Collision");
-		lr = GetNode<light_rays>("%Light Rays");
 		tpScript = GetNode<tele_point>("Path2D/TeleRange/Area2D");
 		this.Position = startPos.Position;
 		sprite.FlipH = true;
@@ -72,10 +68,15 @@ public partial class player : CharacterBody2D
 		}
 			
 		// Handle Jump.
-		if (jumpBufferTimeCounter > 0f && coyoteTimeCounter > 0f) {
+		if (jumpBufferTimeCounter > 0f && coyoteTimeCounter > 0f) { 
 			velocity.Y = JumpVelocity;
 			coyoteTimeCounter = 0f;
 			jumpBufferTimeCounter = 0f;
+		}
+
+		//Variable Jump Height
+		if (Input.IsActionJustReleased("jump") && Velocity.Y < 0) {
+			velocity.Y *= 0.5f;
 		}
 		
 		direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
@@ -152,6 +153,7 @@ public partial class player : CharacterBody2D
 				SpawnSmoke();
 			}
 		}
+		
 		Velocity = velocity;
 		MoveAndSlide();
 	}

@@ -163,4 +163,4 @@ editor_draw_drag_margin = true
 
 [node name="Start Pos" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(217, -8)
+position = Vector2(75, -8)
