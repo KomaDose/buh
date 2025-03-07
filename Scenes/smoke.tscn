@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b2nwrc5s2arfu"]
 
-[ext_resource type="Script" path="res://Scripts/smoke.cs" id="1_60p2g"]
+[ext_resource type="Script" uid="uid://nsv0base3yc0" path="res://Scripts/smoke.cs" id="1_60p2g"]
 [ext_resource type="Texture2D" uid="uid://csdock46fcfd6" path="res://Assests/Sprite-0001.png" id="2_o3wki"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vgbyx"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://u1y3o1pdfnvf"]
+
+[ext_resource type="Texture2D" uid="uid://e0aurxvdx2iq" path="res://Assests/fos.png" id="1_ganbs"]
+
+[node name="Directional Light Source" type="Node2D"]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+z_index = -5
+color = Color(0, 0, 0, 1)
+blend_mode = 1
+shadow_enabled = true
+shadow_color = Color(1, 1, 1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 0
+texture = ExtResource("1_ganbs")

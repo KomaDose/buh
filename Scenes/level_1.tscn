@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=4 uid="uid://c5wh7gp083a2u"]
+[gd_scene load_steps=26 format=4 uid="uid://c5wh7gp083a2u"]
 
-[ext_resource type="PackedScene" uid="uid://u0bt5sqnrdjy" path="res://Scenes/light_source.tscn" id="2_2w7or"]
+[ext_resource type="PackedScene" uid="uid://u1y3o1pdfnvf" path="res://Scenes/directional_light_source.tscn" id="1_lq4m3"]
+[ext_resource type="PackedScene" uid="uid://u0bt5sqnrdjy" path="res://Scenes/point_light_source.tscn" id="2_2w7or"]
 [ext_resource type="PackedScene" uid="uid://b563i12u5stb6" path="res://Scenes/player.tscn" id="2_j4sco"]
-[ext_resource type="Script" path="res://Scripts/camera2d.cs" id="3_1beb1"]
+[ext_resource type="Script" uid="uid://cxb8aytl3xara" path="res://Scripts/camera2d.cs" id="3_1beb1"]
 [ext_resource type="PackedScene" uid="uid://c2p2or7jpujvk" path="res://Scenes/light_rays.tscn" id="3_u05mx"]
 [ext_resource type="TileSet" uid="uid://dey6rbkto0uig" path="res://Assests/Tileset.tres" id="4_3es18"]
 [ext_resource type="PackedScene" uid="uid://b1oglloyrnlck" path="res://Scenes/tile_map_baker.tscn" id="5_8fkyq"]
@@ -79,6 +80,10 @@ offset_bottom = 138.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(494, 568)
+
+[node name="Directional Light Source" parent="." instance=ExtResource("1_lq4m3")]
+visible = false
+position = Vector2(-106, -314)
 
 [node name="Light Source" parent="." instance=ExtResource("2_2w7or")]
 position = Vector2(0, -282)
@@ -185,6 +190,7 @@ rotates = false
 loop = false
 
 [node name="Camera2D" type="Camera2D" parent="Path2D/PathFollow2D"]
+physics_interpolation_mode = 1
 light_mask = 0
 position = Vector2(3.8147e-06, -3.8147e-06)
 zoom = Vector2(3, 3)

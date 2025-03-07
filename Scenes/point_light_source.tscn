@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cbsv4jbg08joe" path="res://Assests/PlaceHolder.png" id="1_ttij0"]
 [ext_resource type="Texture2D" uid="uid://e0aurxvdx2iq" path="res://Assests/fos.png" id="2_8kcf4"]
 
-[node name="Light Source" type="Node2D"]
+[node name="Point Light Source" type="Node2D"]
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(3, 3)
+scale = Vector2(10, 10)
 color = Color(0, 0, 0, 1)
 blend_mode = 1
 shadow_enabled = true

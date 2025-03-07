@@ -1,0 +1,122 @@
+[gd_scene load_steps=15 format=4 uid="uid://ctv538li4uy4a"]
+
+[ext_resource type="PackedScene" uid="uid://u1y3o1pdfnvf" path="res://Scenes/directional_light_source.tscn" id="1_afs4w"]
+[ext_resource type="PackedScene" uid="uid://b563i12u5stb6" path="res://Scenes/player.tscn" id="2_3tvqv"]
+[ext_resource type="TileSet" uid="uid://dey6rbkto0uig" path="res://Assests/Tileset.tres" id="3_548gw"]
+[ext_resource type="PackedScene" uid="uid://b1oglloyrnlck" path="res://Scenes/tile_map_baker.tscn" id="4_hjqbe"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8h618"]
+light_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afs4w"]
+size = Vector2(16, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3tvqv"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_548gw"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjqbe"]
+size = Vector2(416, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8h618"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2n0o"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rmdf"]
+size = Vector2(16, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wv2xt"]
+size = Vector2(16, 96)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f2n0o"]
+light_mode = 1
+
+[node name="Test Room" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3208.0
+offset_top = -1248.0
+offset_right = 1286.0
+offset_bottom = 680.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(494, 568)
+
+[node name="Directional Light Source" parent="." instance=ExtResource("1_afs4w")]
+position = Vector2(-240, -563)
+
+[node name="Player" parent="." instance=ExtResource("2_3tvqv")]
+unique_name_in_owner = true
+position = Vector2(193, -20)
+
+[node name="TileMap" type="Node2D" parent="."]
+light_mask = 0
+
+[node name="TileMapLayer" type="TileMapLayer" parent="TileMap"]
+light_mask = 0
+material = SubResource("CanvasItemMaterial_8h618")
+tile_map_data = PackedByteArray("AAD2/wAAAQAEAAIAAAD3/wAAAQAEAAIAAAD4/wAAAQAEAAIAAAD5/wAAAQAEAAIAAAD6/wAAAQAEAAIAAAD7/wAAAQAEAAIAAAD8/wAAAQAEAAIAAAD9/wAAAQAEAAIAAAD+/wAAAQAEAAIAAAD//wAAAQAEAAIAAAAAAAAAAQAEAAIAAAABAAAAAQAEAAIAAAACAAAAAQAEAAIAAAADAAAAAQAEAAIAAAAEAAAAAQAEAAIAAAAFAAAAAQAEAAIAAAAGAAAAAQAEAAIAAAAHAAAAAQAEAAIAAAAIAAAAAQAEAAIAAAAJAAAAAQAEAAIAAAAKAAAAAQAEAAIAAAALAAAAAQAEAAIAAAAMAAAAAQAEAAIAAAANAAAAAQAEAAIAAAAOAAAAAQAOAAIAAAAOAP//AQACAAQAAAAOAP7/AQACAAQAAAAOAP3/AQACAAQAAAAOAPz/AQACAAQAAAAOAPv/AQACAAQAAAAOAPr/AQACAAQAAAAOAPn/AQAUABIAAAAOAPj/AQACAAQAAAAOAPf/AQACAAQAAAAOAPb/AQACAAQAAAAOAPX/AQACAAIAAAD1/wAAAQAEAAQAAAD1////AQAEAAQAAAD1//7/AQAEAAQAAAD1//3/AQAEAAQAAAD1//z/AQAEAAQAAAD1//v/AQAEAAQAAAD1//r/AQAEAAQAAAD1//n/AQAEAAQAAAD1//j/AQAEAAQAAAD1//f/AQAEAAQAAAD1//b/AQAEAAQAAAD1//X/AQAEAAQAAAAKAPn/AQAOAAgAAAALAPn/AQASAAIAAAAMAPn/AQASAAIAAAANAPn/AQASAAIAAAAGAPz/AQASAAIAAAAFAPz/AQASAAIAAAAEAPz/AQASAAIAAAD9//r/AQASAAIAAAD+//r/AQASAAIAAAD///r/AQASAAIAAAD3//3/AQASAAIAAAD4//3/AQASAAIAAAD5//3/AQASAAIAAAA=")
+tile_set = ExtResource("3_548gw")
+
+[node name="Tile Map Baker" parent="TileMap" instance=ExtResource("4_hjqbe")]
+visible = false
+tilemaplayers_nodepaths = Array[NodePath]([NodePath("../TileMapLayer")])
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(-168, -88)
+shape = SubResource("RectangleShape2D_afs4w")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(-120, -40)
+shape = SubResource("RectangleShape2D_3tvqv")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(-24, -88)
+shape = SubResource("RectangleShape2D_548gw")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(32, 8)
+shape = SubResource("RectangleShape2D_hjqbe")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(88, -56)
+shape = SubResource("RectangleShape2D_8h618")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(200, -104)
+shape = SubResource("RectangleShape2D_f2n0o")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(232, -144)
+shape = SubResource("RectangleShape2D_3rmdf")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="TileMap/Tile Map Baker"]
+position = Vector2(232, -48)
+shape = SubResource("RectangleShape2D_wv2xt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 0
+material = SubResource("CanvasItemMaterial_f2n0o")
+position = Vector2(32, -64)
+zoom = Vector2(3, 3)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_left_margin = 0.05
+drag_top_margin = 0.1
+drag_right_margin = 0.05
+drag_bottom_margin = 0.1
+editor_draw_drag_margin = true
+
+[node name="Start Pos" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(193, -20)

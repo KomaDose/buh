@@ -3,8 +3,8 @@ using System;
 
 public partial class player : CharacterBody2D
 {
-	public float Speed = 110.0f;
-	public float JumpVelocity = -250.0f;
+	public float Speed = 80.0f;
+	public float JumpVelocity = -200.0f;
 	Vector2 direction = new(-1, 0);
 	float coyoteTime = 0.1f;
 	float coyoteTimeCounter;
@@ -28,6 +28,8 @@ public partial class player : CharacterBody2D
 	tele_point tpScript;
 
 	PackedScene smoke = GD.Load<PackedScene>("res://Scenes/smoke.tscn");
+
+	[Export] AnimationPlayer ap;
 
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
@@ -147,11 +149,14 @@ public partial class player : CharacterBody2D
 			}
 		}
 		
-		//Darkness
+		//Smoke
 		if (Input.IsActionJustPressed("action_x")) {
+			/*
 			if (teleRange.ProgressRatio > 0) {
 				SpawnSmoke();
 			}
+			*/
+			SpawnSmoke();
 		}
 		
 		Velocity = velocity;
