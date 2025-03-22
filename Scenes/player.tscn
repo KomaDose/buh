@@ -23,15 +23,11 @@ point_count = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d26w3"]
 size = Vector2(6, 4)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("telePoint", "teleRange", "teleSprite", "path")]
+[node name="Player" type="CharacterBody2D"]
 light_mask = 0
 z_index = 5
 material = SubResource("CanvasItemMaterial_sc4yk")
 script = ExtResource("1_m8l0a")
-telePoint = NodePath("Path2D/TeleRange/TelePoint")
-teleRange = NodePath("Path2D/TeleRange")
-teleSprite = NodePath("TeleSprite")
-path = NodePath("Path2D")
 
 [node name="Collision" type="CollisionPolygon2D" parent="."]
 light_mask = 0
@@ -44,12 +40,14 @@ material = SubResource("CanvasItemMaterial_a7h1x")
 texture = ExtResource("2_dojve")
 
 [node name="TeleSprite" type="Sprite2D" parent="."]
+visible = false
 light_mask = 0
 z_index = -1
 material = SubResource("ShaderMaterial_e2rjt")
 texture = ExtResource("2_dojve")
 
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 curve = SubResource("Curve2D_ys7y1")
 
 [node name="TeleRange" type="PathFollow2D" parent="Path2D"]

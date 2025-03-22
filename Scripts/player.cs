@@ -1,15 +1,27 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public partial class player : CharacterBody2D
 {
 	public float Speed = 80.0f;
-	public float JumpVelocity = -200.0f;
 	Vector2 direction = new(-1, 0);
+
+	public float JumpVelocity = -200.0f;
 	float coyoteTime = 0.1f;
 	float coyoteTimeCounter;
 	float jumpBufferTime = 0.1f;
 	float jumpBufferTimeCounter;
+
+	bool isDashing = false;
+	float dashSpeed = 200f;
+	bool canDash = true;
+	float dashTime = 0.2f;
+	float dashTimeCounter;
+	float dashCooldownTime = 1f;
+	float dashCooldownTimeCounter;
+
+	Vector2 facingDirection;
 	
 	Node2D startPos;
 
@@ -17,15 +29,7 @@ public partial class player : CharacterBody2D
 
 	CollisionPolygon2D col;
 
-	[Export] Node2D telePoint;
-	[Export] PathFollow2D teleRange;
-	[Export] Sprite2D teleSprite;
-	[Export] Path2D path;
-	Vector2 teleportDir;
-
 	bool cancled = false;
-
-	tele_point tpScript;
 
 	PackedScene smoke = GD.Load<PackedScene>("res://Scenes/smoke.tscn");
 
@@ -37,21 +41,24 @@ public partial class player : CharacterBody2D
 		startPos = GetNode<Node2D>("%Start Pos");
 		sprite = GetNode<Sprite2D>("Sprite2D");
 		col = GetNode<CollisionPolygon2D>("Collision");
-		tpScript = GetNode<tele_point>("Path2D/TeleRange/Area2D");
 		this.Position = startPos.Position;
 		sprite.FlipH = true;
 		col.Scale = new Vector2(-1, 1);
-		teleSprite.FlipH = true;
-		path.Curve.SetPointPosition(1, new Vector2(-65, 4));
 	}
 
 	public override void _PhysicsProcess(double delta) {
 		Vector2 velocity = Velocity;
 
-		// Add the gravity.
-		if (!IsOnFloor()) {
-			velocity.Y += gravity * (float)delta;
+		//Gravity.
+		if (isDashing) {
+			velocity.Y = 0;
 		}
+		else {
+			if (!IsOnFloor()) {
+				velocity.Y += gravity * (float)delta;
+			}
+		}
+		
 
 		//Coyote Time
 		if (IsOnFloor()) {
@@ -89,73 +96,48 @@ public partial class player : CharacterBody2D
 		if (direction == Vector2.Left) {
 			sprite.FlipH = true;
 			col.Scale = new Vector2(-1, 1);
-			teleSprite.FlipH = true;
 		}
 		else if (direction == Vector2.Right) {
 			sprite.FlipH = false;
 			col.Scale = new Vector2(1, 1);
-			teleSprite.FlipH = false;
 		}
 
-		teleSprite.GlobalPosition = teleSprite.GlobalPosition.Lerp(telePoint.GlobalPosition + new Vector2(0, -4), (float)delta * 6f);
 
-		//Teleportation
-		if (Input.IsActionJustPressed("left")) {
-			if (teleRange.ProgressRatio > 0 && teleportDir != Vector2.Left) {
-				teleRange.ProgressRatio -= 0.5f;
-			}
-			else {
-				path.Curve.SetPointPosition(1, new Vector2(-65, 4));
-				teleportDir = Vector2.Left;
-				teleRange.ProgressRatio += 0.5f;
-			}
+		if (direction == Vector2.Left) {
+			facingDirection = Vector2.Left;
 		}
-		else if (Input.IsActionJustPressed("right")) {
-			if (teleRange.ProgressRatio > 0 && teleportDir != Vector2.Right) {
-				teleRange.ProgressRatio -= 0.5f;
-			}
-			else {
-				path.Curve.SetPointPosition(1, new Vector2(65, 4));
-				teleportDir = Vector2.Right;
-				teleRange.ProgressRatio += 0.5f;
-			}
+		else if (direction == Vector2.Right) {
+			facingDirection = Vector2.Right;
 		}
-		else if (Input.IsActionJustPressed("up")) {
-			if (teleRange.ProgressRatio > 0 && teleportDir != Vector2.Up) {
-				teleRange.ProgressRatio -= 0.5f;
-			}
-			else {
-				path.Curve.SetPointPosition(1, new Vector2(0, -65));
-				teleportDir = Vector2.Up;
-				teleRange.ProgressRatio += 0.5f;
-			}
+
+		//Shoot
+
+		
+		//Dash
+		if (Input.IsActionJustPressed("action_z") && canDash) {
+			dashTimeCounter = dashTime;
+			dashCooldownTimeCounter = dashCooldownTime;
+			canDash = false;
 		}
-		else if (Input.IsActionJustPressed("down")) {
-			if (teleRange.ProgressRatio > 0 && teleportDir != Vector2.Down) {
-				teleRange.ProgressRatio -= 0.5f;
-			}
-			else {
-				path.Curve.SetPointPosition(1, new Vector2(0, 65));
-				teleportDir = Vector2.Down;
-				teleRange.ProgressRatio += 0.5f;
-			}
+		else {
+			dashTimeCounter -= (float)delta;
+			dashCooldownTimeCounter -= (float)delta;
 		}
 		
-		if (Input.IsActionJustPressed("action_z")) {
-			if (teleRange.ProgressRatio > 0 && !tpScript.isOverlapping) {
-				this.Position = telePoint.GlobalPosition;
-				teleRange.ProgressRatio = 0f;
-				teleSprite.Position = Vector2.Zero;
-			}
+		if (dashCooldownTimeCounter <= 0f) {
+			canDash = true;
 		}
-		
+
+		if (dashTimeCounter > 0f) {
+			isDashing = true;
+			velocity.X = dashSpeed * facingDirection.X;
+		}
+		else {
+			isDashing = false;
+		}
+
 		//Smoke
 		if (Input.IsActionJustPressed("action_x")) {
-			/*
-			if (teleRange.ProgressRatio > 0) {
-				SpawnSmoke();
-			}
-			*/
 			SpawnSmoke();
 		}
 		
@@ -166,7 +148,7 @@ public partial class player : CharacterBody2D
 	public void SpawnSmoke() {
 		StaticBody2D instance = (StaticBody2D)smoke.Instantiate();
 		AddSibling(instance);
-		instance.Position = telePoint.GlobalPosition;
+		instance.Position = this.GlobalPosition;
 	}
 
 	public void Death() {

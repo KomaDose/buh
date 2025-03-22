@@ -116,5 +116,4 @@ textures/canvas_textures/default_texture_filter=0
 lights_and_shadows/use_physical_light_units=true
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 2d/shadow_atlas/size=16384
-2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
